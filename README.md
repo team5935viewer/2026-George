@@ -12,5 +12,5 @@ Goals:
 What we actually have:
 
 Branches:
-  Main - Build season go to code
-  Comp - Competition ready code
+- Main - Build season go to code
+- Comp - Competition ready code
