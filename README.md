@@ -14,3 +14,4 @@ What we actually have:
 Branches:
 - Main - Build season go to code
 - Comp - Competition ready code
+- SysID - Used only for System Identification/Characterization 
