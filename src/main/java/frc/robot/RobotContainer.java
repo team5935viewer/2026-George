@@ -14,7 +14,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -26,8 +25,10 @@ public class RobotContainer {
 
     private final SendableChooser<Command> autoChooser;
 
+
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double TurtleModifier = .3; // Turtle mode is 30% of top speed
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -71,6 +72,12 @@ public class RobotContainer {
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
+        ));
+
+        // Turtle Mode (slow) 
+        joystick.rightBumper().whileTrue(drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed * TurtleModifier) // Drive forward with negative Y (forward).
+        .withVelocityY(-joystick.getLeftX() * MaxSpeed * TurtleModifier) // Drive left with negative X (left).
+        .withRotationalRate(-joystick.getRightX() * MaxAngularRate * TurtleModifier) // Drive counterclockwise with negative X (left).
         ));
 
         // Run SysId routines when holding back/start and X/Y.
