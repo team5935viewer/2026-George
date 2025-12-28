@@ -58,11 +58,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // store this in your Constants file
         RobotConfig config;
         try{
-        config = RobotConfig.fromGUISettings();
+            config = RobotConfig.fromGUISettings();
         } catch (Exception e) {
-        // Handle exception as needed
-        e.printStackTrace();
-        config = null;
+            // Handle exception as needed
+            e.printStackTrace();
+            config = null;
         }
 
         // Configure AutoBuilder last
